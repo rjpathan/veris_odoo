@@ -23,13 +23,16 @@
 {
     'name': 'VERIS Extension for Odoo',
     'version': '1.0',
+    'category': 'Application',
     'summary': 'VERIS (Vocabulary for Event Recording and Incident Sharing) implementation within Odoo',
-    'author': '',
+    'author': 'Riyaj Pathan',
     'depends': ['base'],
     'data': [
         'veris_view.xml',
         'veris_menu.xml',
+        'veris_sequence.xml',
     ],
+    'css': ['static/src/css/veris.css'],
     'installable': True,
     'auto_install': False,
     'application': True,

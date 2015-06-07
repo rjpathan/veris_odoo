@@ -113,7 +113,26 @@ class veris(osv.osv):
 
 	_defaults = {
 		'schema_version' : '1.3',
-		'step': 'step1',
+		'step': 'Step1',
 	}
+
+	def create(self, cr, uid, vals, context=None):
+		incident_seq = self.pool.get('ir.sequence').get(cr, uid, 'veris.incident') or '/'
+		vals['incident_id'] = incident_seq
+		return super(veris, self).create(cr, uid, vals, context)
+
+	def next(self, cr, uid, ids, context=None):
+		for rec in self.browse(cr, uid, ids):
+			if rec.step == 'Step1':
+				return self.write(cr, uid, ids, {'step': 'Step2'})
+			elif rec.step == 'Step2':
+				return self.write(cr, uid, ids, {'step': 'Step3'})
+
+	def previous(self, cr, uid, ids, context=None):
+		for rec in self.browse(cr, uid, ids):
+			if rec.step == 'Step2':
+				return self.write(cr, uid, ids, {'step': 'Step1'})
+			elif rec.step == 'Step3':
+				return self.write(cr, uid, ids, {'step': 'Step2'})
 
 

@@ -73,7 +73,7 @@ class veris(osv.osv):
 		'actor_external_origin_id': fields.many2one('res.country', 'Country/affiliation of external actors'),
 		'actor_external_origin': fields.related('actor_external_origin_id', 'code', type='char', string='Country', store=True),
 
-		'actor_extenal_notes': fields.text('Misc external actor notes'),
+		'actor_external_notes': fields.text('Misc external actor notes'),
 		'actor_internal_notes': fields.text('Misc internal actor notes'),
 		'actor_partner_notes': fields.text('Misc Partner notes'),
 
@@ -113,7 +113,24 @@ class veris(osv.osv):
 
 	_defaults = {
 		'schema_version' : '1.3',
-		'step': 'step1',
+		'step': 'Step1',
 	}
+
+	def create(self, cr, uid, vals, context=None):
+		incident_seq = self.pool.get('ir.sequence').get(cr, uid, 'veris.incident') or '/'
+
+	def next(self, cr, uid, ids, context=None):
+		for rec in self.browse(cr, uid, ids):
+			if rec.step == 'Step1':
+				return self.write(cr, uid, ids, {'step': 'Step2'})
+			elif rec.step == 'Step2':
+				return self.write(cr, uid, ids, {'step': 'Step3'})
+
+	def previous(self, cr, uid, ids, context=None):
+		for rec in self.browse(cr, uid, ids):
+			if rec.step == 'Step2':
+				return self.write(cr, uid, ids, {'step': 'Step1'})
+			elif rec.step == 'Step3':
+				return self.write(cr, uid, ids, {'step': 'Step2'})
 
 

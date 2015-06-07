@@ -11,36 +11,39 @@
 
 					</header>
 					<sheet>
-		                <h1>
-		                    <label string="Incident ID " attrs="{'invisible':[('incident_id','=',False)]}"/>
-		                    <field name="incident_id" class="oe_inline" readonly="1"/>
-		                </h1>
-						<group string="Incident Tracking" col="3" colspan="4">
-							<label colspan="4" string="This section captures some general information about the incident."/>
-						</group>
-						<group col="3">
-							<group col="1">
-								<field name="incident_date" required="1"/>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False), ('step','!=','Step1')]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1" attrs="{'invisible':[('step','!=','Step1')]}"/>
+				        </h1>
+
+						<group col="3" attrs="{'invisible':[('step','!=','Step1')]}">
+							<group string="Incident Tracking" col="3" colspan="4">
+								<label colspan="4" string="This section captures some general information about the incident."/>
 							</group>
-							<group col="1">
-								<field name="security_incident" widget="radio" required="1"/>
+							<group col="3">
+								<group col="1">
+									<field name="incident_date" required="1"/>
+								</group>
+								<group col="1">
+									<field name="security_incident" widget="radio" required="1"/>
+								</group>
+								<group col="1">
+									<field name="summary"/>
+								</group>
 							</group>
-							<group col="1">
-								<field name="summary"/>
+							<group colspan="4">
+								<field name="confidence" widget="radio"/>
 							</group>
-						</group>
-						<group>
-							<field name="confidence" widget="radio" colspan="4"/>
-						</group>
-						<group>
-							<field name="notes" colspan="4"/>
+							<group colspan="4">
+								<field name="notes" />
+							</group>
 						</group>
 						
 
-						<group string="Victim Organisation">
+						<group string="Victim Organisation" attrs="{'invisible':[('step','!=','Step1')]}">
 							<label string="This section describes (but doesn't identify) the organization affected by the incident. If no industry option fits, select 'Other' and describe in the notes field." colspan="4"/>
 						</group>
-						<group col="2">
+						<group col="2" attrs="{'invisible':[('step','!=','Step1')]}">
 							<group col="1">
 								<field name="victim_industry" required="1"/>
 							</group>
@@ -55,10 +58,10 @@
 							</group>
 						</group>
 
-						<group string="Threat Actors">
+						<group string="Threat Actors" attrs="{'invisible':[('step','!=','Step2')]}">
 							<label string="What Threat Actors were involved?" colspan="4"/>
 						</group>
-						<group col="6">
+						<group col="10" attrs="{'invisible':[('step','!=','Step2')]}">
 							<group col="4">
 								<field name="actor_internal"/>
 								<field name="actor_external"/>
@@ -68,45 +71,50 @@
 							<group col="2"/>
 						</group>
 
-						<group col="2" attrs="{'invisible': [('actor_internal', '=', False)]}">
-							<group col="1">
-								<field name="actor_internal_variety"/>
+						<group col="2" attrs="{'invisible':[('step','!=','Step2')]}">
+							<group col="2" attrs="{'invisible': [('actor_internal', '=', False)]}" colspan="4">
+								<separator string="Internal Actors" colspan="2"/>
+								<group col="1">
+									<field name="actor_internal_variety"/>
+								</group>
+								<group col="1">
+									<field name="actor_internal_motive"/>
+								</group>
+								<group col="1" colspan="4">
+									<field name="actor_internal_notes"/>
+								</group>
 							</group>
-							<group col="1">
-								<field name="actor_internal_motive"/>
-							</group>
-							<group col="1" colspan="4">
-								<field name="actor_internal_notes"/>
-							</group>
-						</group>
 
-						<group col="2" attrs="{'invisible': [('actor_external', '=', False)]}">
-							<group col="1">
-								<field name="actor_external_variety"/>
+							<group col="2" attrs="{'invisible': [('actor_external', '=', False)]}" colspan="4">
+								<separator string="External Actors" colspan="2"/>
+								<group col="1">
+									<field name="actor_external_variety"/>
+								</group>
+								<group col="1">
+									<field name="actor_external_origin_id" widget="selection"/>
+								</group>
+								<group col="1">
+									<field name="actor_external_motive"/>
+								</group>
+								<group col="1" colspan="4">
+									<field name="actor_external_notes"/>
+								</group>
 							</group>
-							<group col="1">
-								<field name="actor_external_origin_id" widget="selection"/>
-							</group>
-							<group col="1">
-								<field name="actor_external_motive"/>
-							</group>
-							<group col="1" colspan="4">
-								<field name="actor_external_notes"/>
-							</group>
-						</group>
 
-						<group col="2" attrs="{'invisible': [('actor_partner', '=', False)]}">
-							<group col="1">
-								<field name="actor_partner_industry"/>
-							</group>
-							<group col="1">
-								<field name="actor_partner_country_id" widget="selection"/>
-							</group>
-							<group col="1">
-								<field name="actor_partner_motive"/>
-							</group>
-							<group col="1" colspan="4">
-								<field name="actor_partner_notes"/>
+							<group col="2" attrs="{'invisible': [('actor_partner', '=', False)]}" colspan="4">
+								<separator string="Partner Actor" colspan="2"/>
+								<group col="1">
+									<field name="actor_partner_industry"/>
+								</group>
+								<group col="1">
+									<field name="actor_partner_country_id" widget="selection"/>
+								</group>
+								<group col="1">
+									<field name="actor_partner_motive"/>
+								</group>
+								<group col="1" colspan="4">
+									<field name="actor_partner_notes"/>
+								</group>
 							</group>
 						</group>
 
@@ -115,16 +123,23 @@
 
 
 						<footer>
-							<group colspan="4">
-								<group colspan="3">
-									<label string=" "/>
+							<group col="8">
+								<group col="4">
+									<field name="step" invisible="1"/>
+									<label string=" " colspan="2"/>
 								</group>
-								<group colspan="1" col="3">
-									<button name="previous" type="object" string="Previous"/>
-									<button name="next" type="object" string="Next"/>
+								<group col="4">
+									<group col="2">
+										<label string=" "/>
+									</group>
+									<group col="2">
+										<button name="previous" type="object" string="Previous" attrs="{'invisible': [('step','=','Step1')]}"/>
+										<button name="next" type="object" string="Next"/>
+									</group>
 								</group>
 							</group>
 						</footer>
+
 					</sheet>
 				</form>
 			</field>
