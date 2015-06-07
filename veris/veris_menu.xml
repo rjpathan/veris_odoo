@@ -1,0 +1,10 @@
+<openerp>
+	<data>
+
+		<menuitem id="veris_main" sequence="20" name="VERIS"/>
+
+		<menuitem id="veris_sub1" name="VERIS" parent="veris_main"/>
+		<menuitem id="veris_incident_tracking" parent="veris_sub1" action="veris_incident_tracking_action" sequence="1"/>
+
+	</data>
+</openerp>

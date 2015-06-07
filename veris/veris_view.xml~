@@ -1,0 +1,151 @@
+<openerp>
+	<data>
+
+		
+		<record id="veris_form" model="ir.ui.view">
+			<field name="name">veris.form</field>
+			<field name="model">veris</field>
+			<field name="arch" type="xml">
+				<form string="VERIS">
+					<header>
+
+					</header>
+					<sheet>
+		                <h1>
+		                    <label string="Incident ID " attrs="{'invisible':[('incident_id','=',False)]}"/>
+		                    <field name="incident_id" class="oe_inline" readonly="1"/>
+		                </h1>
+						<group string="Incident Tracking" col="3" colspan="4">
+							<label colspan="4" string="This section captures some general information about the incident."/>
+						</group>
+						<group col="3">
+							<group col="1">
+								<field name="incident_date" required="1"/>
+							</group>
+							<group col="1">
+								<field name="security_incident" widget="radio" required="1"/>
+							</group>
+							<group col="1">
+								<field name="summary"/>
+							</group>
+						</group>
+						<group>
+							<field name="confidence" widget="radio" colspan="4"/>
+						</group>
+						<group>
+							<field name="notes" colspan="4"/>
+						</group>
+						
+
+						<group string="Victim Organisation">
+							<label string="This section describes (but doesn't identify) the organization affected by the incident. If no industry option fits, select 'Other' and describe in the notes field." colspan="4"/>
+						</group>
+						<group col="2">
+							<group col="1">
+								<field name="victim_industry" required="1"/>
+							</group>
+							<group col="1">
+								<field name="victim_employee_count" required="1"/>
+							</group>
+							<group col="1">
+								<field name="victim_country_id" widget="selection"/>
+							</group>
+							<group col="1">
+								<field name="victim_notes"/>
+							</group>
+						</group>
+
+						<group string="Threat Actors">
+							<label string="What Threat Actors were involved?" colspan="4"/>
+						</group>
+						<group col="6">
+							<group col="4">
+								<field name="actor_internal"/>
+								<field name="actor_external"/>
+								<field name="actor_partner"/>
+								<field name="actor_unknown"/>
+							</group>
+							<group col="2"/>
+						</group>
+
+						<group col="2" attrs="{'invisible': [('actor_internal', '=', False)]}">
+							<group col="1">
+								<field name="actor_internal_variety"/>
+							</group>
+							<group col="1">
+								<field name="actor_internal_motive"/>
+							</group>
+							<group col="1" colspan="4">
+								<field name="actor_internal_notes"/>
+							</group>
+						</group>
+
+						<group col="2" attrs="{'invisible': [('actor_external', '=', False)]}">
+							<group col="1">
+								<field name="actor_external_variety"/>
+							</group>
+							<group col="1">
+								<field name="actor_external_origin_id" widget="selection"/>
+							</group>
+							<group col="1">
+								<field name="actor_external_motive"/>
+							</group>
+							<group col="1" colspan="4">
+								<field name="actor_external_notes"/>
+							</group>
+						</group>
+
+						<group col="2" attrs="{'invisible': [('actor_partner', '=', False)]}">
+							<group col="1">
+								<field name="actor_partner_industry"/>
+							</group>
+							<group col="1">
+								<field name="actor_partner_country_id" widget="selection"/>
+							</group>
+							<group col="1" colspan="4">
+								<field name="actor_partner_motive"/>
+							</group>
+						</group>
+
+
+
+
+
+						<footer>
+							<group colspan="4">
+								<group colspan="3">
+									<label string=" "/>
+								</group>
+								<group colspan="1" col="3">
+									<button name="previous" type="object" string="Previous"/>
+									<button name="next" type="object" string="Next"/>
+								</group>
+							</group>
+						</footer>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="veris_tree" model="ir.ui.view">
+			<field name="name">veris.tree</field>
+			<field name="model">veris</field>
+			<field name="arch" type="xml">
+				<tree string="VERIS">
+					<field name="incident_id"/>
+					<field name="incident_date"/>
+					<field name="security_incident"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="veris_incident_tracking_action" model="ir.actions.act_window">
+			<field name="name">Incident Tracking</field>
+			<field name="res_model">veris</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+	</data>
+</openerp>
