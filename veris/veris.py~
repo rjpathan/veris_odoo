@@ -1,6 +1,6 @@
 from openerp.osv import osv, fields
 
-class veris(osv.osv):
+class veris_incident(osv.osv):
 	_name = "veris.incident"
 
 	_description = "VERIS (Vocabulary for Event Recording and Incident Sharing)"
@@ -243,7 +243,7 @@ class veris_asset(osv.osv):
 		'asset_management': fields.selection([('External', 'Externally managed'), ('Internal', 'Internally managed'), ('NA', 'NA'), ('Unknown', 'Unknown')], 'Who MANAGES these asset(s)?'),
 		'asset_accessibility': fields.selection([('External', 'Publicly Accessible'), ('Internal', 'Internally Accessible'), ('Isolated', 'Internally Isolated or Restricted Environment'), ('NA', 'NA'), ('Unknown', 'Unknown')], 'Network ACCESSIBILITY of these asset(s)'),
 		'asset_cloud': fields.selection([('Hypervisor', 'Hypervisor break-out attack'), ('Partner application', 'Application vulnerability in partner-developed application'), ('Hosting governance', 'Lack of security process or procedure by hosting provider'), ('Customer attack', 'Penetration of another web site on shared device'), ('Hosting error', 'Misconfiguration or error by hosting provider'), ('User breakout', 'Elevation of privilege by another customer in shared environment'), ('Unknown', 'Unknown'), ('Other', 'Other')], 'If hosted "in the CLOUD," was this a contributing factor to the incident?'),
-		'asset_notes': fields.text('Misc Asset Notes'),
+		'asset_note': fields.text('Misc Asset Notes'),
 	}
 
 
@@ -272,7 +272,7 @@ class veris_attribute(osv.osv):
 
 
 class veris_impact(osv.osv):
-	_name = "veris.imapact"
+	_name = "veris.impact"
 
 	_columns = {
 		'incident_id': fields.many2one('veris.incident', 'Incident'),

@@ -63,6 +63,11 @@
 							<field name="action_ids" widget="one2many_list" nolabel="1"/>
 						</group>
 
+						<group string="Affected Assets"/>
+						<group colspan="4">
+							<field name="asset_ids" nolabel="1"/>
+						</group>
+
 						<group string="Security Attributes">
 						</group>
 						<group colspan="4">
@@ -532,6 +537,46 @@
 			</field>
 		</record>
 
+
+		<record id="veris_asset_form" model="ir.ui.view">
+			<field name="name">veris.asset.form</field>
+			<field name="model">veris.asset</field>
+			<field name="arch" type="xml">
+				<form string="Affected Assets">
+					<group col="2">
+						<group col="1">
+							<field name="asset_variety"/>
+						</group>
+						<group col="1">
+							<field name="asset_ownership"/>
+						</group>
+						<group col="1">
+							<field name="asset_management"/>
+						</group>
+						<group col="1">
+							<field name="asset_hosting"/>
+						</group>
+					</group>
+					<group colspan="4">
+						<field name="asset_note" colspan="4"/>
+					</group>
+				</form>
+			</field>
+		</record>						
+
+
+		<record id="veris_asset_tree" model="ir.ui.view">
+			<field name="name">veris.asset.tree</field>
+			<field name="model">veris.asset</field>
+			<field name="arch" type="xml">
+				<tree string="Affected Assets">
+					<field name="asset_variety"/>
+					<field name="asset_ownership"/>
+					<field name="asset_management"/>
+					<field name="asset_hosting"/>
+				</tree>
+			</field>
+		</record>
 
 	</data>
 </openerp>
