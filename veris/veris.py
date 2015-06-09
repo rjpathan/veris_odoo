@@ -3,6 +3,8 @@ from openerp.osv import osv, fields
 class veris_incident(osv.osv):
 	_name = "veris.incident"
 
+	_rec_name = "incident_id"
+
 	_description = "VERIS (Vocabulary for Event Recording and Incident Sharing)"
 
 	_columns = {
@@ -95,7 +97,7 @@ class veris_victim(osv.osv):
 	_name = "veris.victim"
 
 	_columns = {
-		'incident_id': fields.many2one('veris.incident'),
+		'incident_id': fields.many2one('veris.incident', 'Incident ID'),
 		#victim:
 		'victim_industry': fields.selection(
 									[

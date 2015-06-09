@@ -49,29 +49,345 @@
 							<label string="This section describes (but doesn't identify) the organization affected by the incident. If no industry option fits, select 'Other' and describe in the notes field." colspan="4"/>
 						</group>
 						<group colspan="4">
-							<field name="victim_ids" widget="one2many_list" nolabel="1"/>
+							<field name="victim_ids" widget="one2many_list" nolabel="1">
+								<tree string="Victim Organisation">
+									<field name="victim_industry" string="Industry Type"/>
+									<field name="victim_employee_count" string="Employee Count"/>
+								</tree>
+								<form string="Victim Organisation">
+									<group col="2">
+										<group col="1">
+											<field name="victim_industry" required="1"/>
+										</group>
+										<group col="1">
+											<field name="victim_employee_count" required="1"/>
+										</group>
+										<group col="1">
+											<field name="victim_country_id" widget="selection"/>
+										</group>
+										<group col="1">
+											<field name="victim_notes"/>
+										</group>
+									</group>
+								</form>
+							</field>
+
 						</group>
 
 						<group string="Threat Actors"/>
 						<group colspan="4">
-							<field name="actor_ids" widget="one2many_list" nolabel="1"/>
+							<field name="actor_ids" widget="one2many_list" nolabel="1">
+								<tree string="Actors Involved">
+									<field name="actor_internal"/>
+									<field name="actor_external"/>
+									<field name="actor_partner"/>
+									<field name="actor_unknown"/>
+								</tree>
+								<form string="Actors Involved">
+									<group>
+										<label string="What Threat Actors were involved?" colspan="4"/>
+									</group>
+									<group col="10">
+										<group col="4">
+											<field name="actor_internal"/>
+											<field name="actor_external"/>
+											<field name="actor_partner"/>
+											<field name="actor_unknown"/>
+										</group>
+										<group col="2"/>
+									</group>
+
+									<group col="2">
+										<group col="2" attrs="{'invisible': [('actor_internal', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Internal Actors" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="actor_internal_variety"/>
+											</group>
+											<group col="1">
+												<field name="actor_internal_motive"/>
+											</group>
+											<group col="1" colspan="4">
+												<field name="actor_internal_notes"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('actor_external', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="External Actors" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="actor_external_variety"/>
+											</group>
+											<group col="1">
+												<field name="actor_external_origin_id" widget="selection"/>
+											</group>
+											<group col="1">
+												<field name="actor_external_motive"/>
+											</group>
+											<group col="1" colspan="4">
+												<field name="actor_external_notes"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('actor_partner', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Partner Actor" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="actor_partner_industry"/>
+											</group>
+											<group col="1">
+												<field name="actor_partner_country_id" widget="selection"/>
+											</group>
+											<group col="1">
+												<field name="actor_partner_motive"/>
+											</group>
+											<group col="1" colspan="4">
+												<field name="actor_partner_notes"/>
+											</group>
+										</group>
+									</group>
+
+								</form>
+							</field>
+
 						</group>
 
 						<group string="Threat Actions">
 						</group>
 						<group colspan="4">
-							<field name="action_ids" widget="one2many_list" nolabel="1"/>
+							<field name="action_ids" widget="one2many_list" nolabel="1">
+								<tree string="Actions Involved">
+									<field name="action_malware_check"/>
+									<field name="action_hacking_check"/>
+									<field name="action_social_check"/>
+									<field name="action_misuse_check"/>
+									<field name="action_physical_check"/>
+									<field name="action_error_check"/>
+									<field name="action_environmental_check"/>
+									<field name="action_unknown_check"/>
+								</tree>
+								<form string="Actions Involved">
+									<group>
+										<label string="What Threat Actions were involved?" colspan="4"/>
+									</group>
+									<group col="8" colspan="4">
+										<field name="action_malware_check"/>
+										<field name="action_hacking_check"/>
+										<field name="action_social_check"/>
+										<field name="action_misuse_check"/>
+										<field name="action_physical_check"/>
+										<field name="action_error_check"/>
+										<field name="action_environmental_check"/>
+										<field name="action_unknown_check"/>
+									</group>
+
+									<group col="2">
+										<group col="2" attrs="{'invisible': [('action_malware_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Malware Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_malware_name"/>
+											</group>
+											<group col="1">
+												<field name="action_malware_cve"/>
+											</group>
+											<group col="1">
+												<field name="action_malware_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_malware_vector"/>
+											</group>
+											<group>
+												<field name="action_malware_notes" colspan="4"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('action_hacking_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Hacking Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_hacking_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_hacking_vector"/>
+											</group>
+											<group col="1">
+												<field name="action_hacking_cve"/>
+											</group>
+											<group col="1">
+												<field name="action_hacking_notes"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('action_social_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Social Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_social_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_social_vector"/>
+											</group>
+											<group>
+												<field name="action_social_notes" colspan="4"/>
+											</group>
+										</group>
+
+
+										<group col="2" attrs="{'invisible': [('action_misuse_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Misuse Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_misuse_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_misuse_vector"/>
+											</group>
+											<group>
+												<field name="action_misuse_notes" colspan="4"/>
+											</group>
+										</group>
+
+
+										<group col="2" attrs="{'invisible': [('action_physical_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Physical Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_physical_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_physical_vector"/>
+											</group>
+											<group>
+												<field name="action_physical_notes" colspan="4"/>
+											</group>
+										</group>
+
+
+										<group col="2" attrs="{'invisible': [('action_error_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Error Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_error_variety"/>
+											</group>
+											<group col="1">
+												<field name="action_error_vector"/>
+											</group>
+											<group colspan="4" col="1">
+												<field name="action_error_notes" colspan="4"/>
+											</group>
+										</group>
+
+
+										<group col="2" attrs="{'invisible': [('action_environmental_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Environmental Actions" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="action_environmental_variety"/>
+											</group>
+											<group>
+												<field name="action_environmental_notes" colspan="4"/>
+											</group>
+										</group>
+
+									</group>
+								</form>
+							</field>
+
 						</group>
 
 						<group string="Affected Assets"/>
 						<group colspan="4">
-							<field name="asset_ids" nolabel="1"/>
+							<field name="asset_ids" nolabel="1">
+								<tree string="Affected Assets">
+									<field name="asset_variety"/>
+									<field name="asset_ownership"/>
+									<field name="asset_management"/>
+									<field name="asset_hosting"/>
+								</tree>
+								<form string="Affected Assets">
+									<group col="2">
+										<group col="1">
+											<field name="asset_variety"/>
+										</group>
+										<group col="1">
+											<field name="asset_ownership"/>
+										</group>
+										<group col="1">
+											<field name="asset_management"/>
+										</group>
+										<group col="1">
+											<field name="asset_hosting"/>
+										</group>
+									</group>
+									<group colspan="4">
+										<field name="asset_note" colspan="4"/>
+									</group>
+								</form>
+							</field>
 						</group>
 
 						<group string="Security Attributes">
 						</group>
 						<group colspan="4">
-							<field name="attribute_ids" nolabel="1"/>
+							<field name="attribute_ids" nolabel="1">
+								<tree string="Security Attributes">
+									<field name="attribute_confidentiality_check"/>
+									<field name="attribute_integrity_check"/>
+									<field name="attribute_availability_check"/>
+								</tree>
+								<form string="Security Attributes">
+									<group>
+										<label string="What attributes were compromised?" colspan="4"/>
+									</group>
+									<group col="6" colspan="4">
+										<field name="attribute_confidentiality_check"/>
+										<field name="attribute_integrity_check"/>
+										<field name="attribute_availability_check"/>
+									</group>
+					
+									<group col="2">
+										<group col="2" attrs="{'invisible': [('attribute_confidentiality_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Confidentiality/Possession loss" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="attribute_confidentiality_data_disclosure"/>
+											</group>
+											<group col="1">
+												<field name="attribute_confidentiality_notes"/>
+											</group>
+											<group col="1">
+												<field name="attribute_confidentiality_variety"/>
+											</group>
+											<group col="1">
+												<field name="attribute_confidentiality_variety_data" class="oe_inline" nolabel="1"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('attribute_integrity_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Integrity/Authenticity loss" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="attribute_integrity_variety"/>
+											</group>
+											<group col="1">
+												<field name="attribute_integrity_notes"/>
+											</group>
+										</group>
+
+										<group col="2" attrs="{'invisible': [('attribute_availability_check', '=', False)]}" colspan="4">
+											<html><font name="Helvetica-bold" size="4"><label string="Availability/Utility loss" colspan="2"/></font></html>
+											<newline/>
+											<group col="1">
+												<field name="attribute_availability_variety"/>
+											</group>
+											<group col="1">
+												<field name="attribute_availability_notes"/>
+											</group>
+										</group>
+									</group>
+								</form>
+							</field>
 						</group>
 
 						<group col="3" string="Timeline of events">
@@ -103,7 +419,54 @@
 								
 
 						<group string="Impact Analysis">
-							<field name="impact_ids" widget="one2many_list" nolabel="1" colspan="4"/>
+							<field name="impact_ids" widget="one2many_list" nolabel="1" colspan="4">
+								<tree string="Impact Analysis">
+									<field name="impact_overall"/>
+								</tree>
+								<form string="Impact Analysis">
+									<group col="3">
+										<label string=" "/>
+										<label string="Losses"/>
+										<label string="Notes"/>
+
+										<label string="Overall Impact"/>
+										<field name='impact_overall' nolabel="1"/>
+										<field name='impact_overall_note' nolabel="1"/>
+
+										<label string="Asset and fraud-related losses"/>
+										<field name='impact_asset_fraud' nolabel="1"/>	
+										<field name='impact_asset_fraud_note' nolabel="1"/>	
+
+										<label string="Brand and market damage"/>
+										<field name='impact_brand_market_damage' nolabel="1"/>	
+										<field name='impact_brand_market_damage_note' nolabel="1"/>	
+
+										<label string="Business disruption"/>
+										<field name='impact_business_disruption' nolabel="1"/>	
+										<field name='impact_business_disruption_note' nolabel="1"/>	
+
+										<label string="Increased operating costs"/>
+										<field name='impact_operating_costs' nolabel="1"/>		
+										<field name='impact_operating_costs_note' nolabel="1"/>		
+
+										<label string="Legal and regulatory costs"/>
+										<field name='impact_legal_regulatory_costs' nolabel="1"/>	
+										<field name='impact_legal_regulatory_costs_note' nolabel="1"/>	
+
+										<label string="Loss of competitive advantage"/>
+										<field name='impact_competitive_advantage_loss' nolabel="1"/>		
+										<field name='impact_competitive_advantage_loss_note' nolabel="1"/>		
+
+										<label string="Response and recovery costs"/>
+										<field name='impact_response_recovery_costs' nolabel="1"/>								
+										<field name='impact_response_recovery_costs_note' nolabel="1"/>								
+
+										<label string="Other"/>
+										<field name='impact_other' nolabel="1"/>		
+										<field name='impact_other_note' nolabel="1"/>		
+									</group>
+								</form>
+							</field>
 						</group>
 								
 					</sheet>
@@ -137,6 +500,12 @@
 			<field name="model">veris.victim</field>
 			<field name="arch" type="xml">
 				<form string="Victim Organisation">
+					<sheet>
+			        <h1>
+			            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+			            <field name="incident_id" class="oe_inline" readonly="1"/>
+			        </h1>
+					<newline/>
 					<group col="2">
 						<group col="1">
 							<field name="victim_industry" required="1"/>
@@ -151,6 +520,7 @@
 							<field name="victim_notes"/>
 						</group>
 					</group>
+					</sheet>
 				</form>
 			</field>
 		</record>
@@ -160,10 +530,18 @@
 			<field name="model">veris.victim</field>
 			<field name="arch" type="xml">
 				<tree string="Victim Organisation">
+					<field name="incident_id"/>
 					<field name="victim_industry" string="Industry Type"/>
 					<field name="victim_employee_count" string="Employee Count"/>
 				</tree>
 			</field>
+		</record>
+
+		<record id="veris_victim_org_action" model="ir.actions.act_window">
+			<field name="name">Victim Organisation</field>
+			<field name="res_model">veris.victim</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
 		</record>
 
 		<!-- Actors -->
@@ -172,6 +550,12 @@
 			<field name="model">veris.actor</field>
 			<field name="arch" type="xml">
 				<form string="Actors Involved">
+					<sheet>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1"/>
+				        </h1>
+						<newline/>
 					<group>
 						<label string="What Threat Actors were involved?" colspan="4"/>
 					</group>
@@ -234,7 +618,7 @@
 							</group>
 						</group>
 					</group>
-
+					</sheet>
 				</form>
 			</field>
 		</record>
@@ -244,6 +628,7 @@
 			<field name="model">veris.actor</field>
 			<field name="arch" type="xml">
 				<tree string="Actors Involved">
+					<field name="incident_id"/>
 					<field name="actor_internal"/>
 					<field name="actor_external"/>
 					<field name="actor_partner"/>
@@ -252,12 +637,26 @@
 			</field>
 		</record>
 
+		<record id="veris_actor_action" model="ir.actions.act_window">
+			<field name="name">Actors</field>
+			<field name="res_model">veris.actor</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
 		<!-- Actions -->
 		<record id="veris_action_form" model="ir.ui.view">
 			<field name="name">veris.action.form</field>
 			<field name="model">veris.action</field>
 			<field name="arch" type="xml">
 				<form string="Actions Involved">
+					<sheet>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1"/>
+				        </h1>
+						<newline/>
 					<group>
 						<label string="What Threat Actions were involved?" colspan="4"/>
 					</group>
@@ -382,6 +781,7 @@
 						</group>
 
 					</group>
+					</sheet>
 				</form>
 			</field>
 		</record>
@@ -391,6 +791,7 @@
 			<field name="model">veris.action</field>
 			<field name="arch" type="xml">
 				<tree string="Actions Involved">
+					<field name="incident_id"/>
 					<field name="action_malware_check"/>
 					<field name="action_hacking_check"/>
 					<field name="action_social_check"/>
@@ -403,12 +804,26 @@
 			</field>
 		</record>
 
+		<record id="veris_action_action" model="ir.actions.act_window">
+			<field name="name">Action</field>
+			<field name="res_model">veris.action</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
 		<!-- Security Attributes -->
 		<record id="veris_attribute_form" model="ir.ui.view">
 			<field name="name">veris.attribute</field>
 			<field name="model">veris.attribute</field>
 			<field name="arch" type="xml">
 				<form string="Security Attributes">
+					<sheet>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1"/>
+				        </h1>
+						<newline/>
 					<group>
 						<label string="What attributes were compromised?" colspan="4"/>
 					</group>
@@ -458,6 +873,7 @@
 							</group>
 						</group>
 					</group>
+					</sheet>
 				</form>
 			</field>
 		</record>
@@ -467,6 +883,7 @@
 			<field name="model">veris.attribute</field>
 			<field name="arch" type="xml">
 				<tree string="Security Attributes">
+					<field name="incident_id"/>
 					<field name="attribute_confidentiality_check"/>
 					<field name="attribute_integrity_check"/>
 					<field name="attribute_availability_check"/>
@@ -474,6 +891,12 @@
 			</field>
 		</record>
 
+		<record id="veris_attribute_action" model="ir.actions.act_window">
+			<field name="name">Attributes</field>
+			<field name="res_model">veris.attribute</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
 
 		
 		<!-- Impact -->
@@ -482,6 +905,12 @@
 			<field name="model">veris.impact</field>
 			<field name="arch" type="xml">
 				<form string="Impact Analysis">
+					<sheet>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1"/>
+				        </h1>
+						<newline/>
 					<group col="3">
 						<label string=" "/>
 						<label string="Losses"/>
@@ -523,6 +952,7 @@
 						<field name='impact_other' nolabel="1"/>		
 						<field name='impact_other_note' nolabel="1"/>		
 					</group>
+					</sheet>
 				</form>
 			</field>
 		</record>
@@ -532,10 +962,19 @@
 			<field name="model">veris.impact</field>
 			<field name="arch" type="xml">
 				<tree string="Impact Analysis">
+					<field name="incident_id"/>
 					<field name="impact_overall"/>
 				</tree>
 			</field>
 		</record>
+
+		<record id="veris_impact_action" model="ir.actions.act_window">
+			<field name="name">Imapct Analysis</field>
+			<field name="res_model">veris.impact</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
 
 
 		<record id="veris_asset_form" model="ir.ui.view">
@@ -543,6 +982,12 @@
 			<field name="model">veris.asset</field>
 			<field name="arch" type="xml">
 				<form string="Affected Assets">
+					<sheet>
+				        <h1>
+				            <label string="Incident " attrs="{'invisible':['|', ('incident_id','=',False)]}"/>
+				            <field name="incident_id" class="oe_inline" readonly="1"/>
+				        </h1>
+						<newline/>
 					<group col="2">
 						<group col="1">
 							<field name="asset_variety"/>
@@ -560,6 +1005,7 @@
 					<group colspan="4">
 						<field name="asset_note" colspan="4"/>
 					</group>
+					</sheet>
 				</form>
 			</field>
 		</record>						
@@ -570,6 +1016,7 @@
 			<field name="model">veris.asset</field>
 			<field name="arch" type="xml">
 				<tree string="Affected Assets">
+					<field name="incident_id"/>
 					<field name="asset_variety"/>
 					<field name="asset_ownership"/>
 					<field name="asset_management"/>
@@ -577,6 +1024,14 @@
 				</tree>
 			</field>
 		</record>
+
+		<record id="veris_asset_action" model="ir.actions.act_window">
+			<field name="name">Assets</field>
+			<field name="res_model">veris.asset</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
 
 	</data>
 </openerp>
